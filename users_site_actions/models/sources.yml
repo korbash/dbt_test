@@ -1,0 +1,25 @@
+version: 2
+
+sources:
+
+    - name: src_actions
+      schema: default
+      # loader: S3
+      description: "product analitica"
+
+      tables:
+
+        - name: src_actions
+          description: "data loaded by python"
+          identifier: pre_users_actions7
+    
+    - name: src_back
+      schema: default
+      # loader: S3
+      description: ""
+
+      tables:
+
+        - name: src_users
+          description: "all users"
+          identifier: _airbyte_raw_users

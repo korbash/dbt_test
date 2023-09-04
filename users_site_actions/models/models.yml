@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: apply_promo
+    description: "event promo apply"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+  - name: apply_ref
+    description: "event user comes with refcode"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+
+  - name: apply_utm
+    description: "event user comes with utm"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - unique
+          - not_null
+        
+  - name: distinct_actions
+    description: "all events without duplicates"
+    columns:
+      - name: id
+        description: "The primary key for this table"

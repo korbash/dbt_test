@@ -1,0 +1,11 @@
+name: test-dbt
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - jupyterlab
+  - yapf
+  - shandy-sqlfmt[jinjafmt]
+  - pip
+  - pip:
+    - -r requirements.txt
