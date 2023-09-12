@@ -12,6 +12,16 @@ sources:
         - name: src_actions
           description: "data loaded by python"
           identifier: pre_users_actions7
+        - name: s3actions0
+          description: "old data from s3"
+          identifier: s3connector_actions0
+        - name: s3actions1
+          description: "old data from s3"
+          identifier: s3connector_actions1
+        - name: actions_row
+          description: "all old data from s3"
+          identifier: S3_users_actions_row
+    
     
     - name: src_back
       schema: default

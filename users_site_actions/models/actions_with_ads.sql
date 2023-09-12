@@ -19,5 +19,5 @@ SELECT {{
     groupArray(50)(utm_time0) OVER w AS utm_times
 
 FROM {{ref("separate_ads_info")}}
-WHERE modulo(sipHash64(track_id),100) == 0
+-- WHERE modulo(sipHash64(track_id),100) == 0
 WINDOW w AS (PARTITION BY track_id ORDER BY datetime)

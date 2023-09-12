@@ -1,5 +1,4 @@
 {{ config(
-    materialized='table',
     engine='MergeTree()',
     order_by=['event', 'success', 'type', 'method', 'datetime']
 ) }}
