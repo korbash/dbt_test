@@ -30,20 +30,14 @@
   {% if backup_relation is none %}
     {{ log('Creating new relation ' + target_relation.name )}}
     -- There is not existing relation, so we can just create
-    {% call statement('main') -%}
-      {{ clickhouse__insert_by_parts(False, target_relation, sql) }}
-    {%- endcall %}
+    {{ clickhouse__insert_by_parts(False, target_relation, sql) }}
   {% elif existing_relation.can_exchange %}
     -- We can do an atomic exchange, so no need for an intermediate
-    {% call statement('main') -%}
-      {{ clickhouse__insert_by_parts(False, backup_relation, sql) }}
-    {%- endcall %}
+    {{ clickhouse__insert_by_parts(False, backup_relation, sql) }}
     {% do exchange_tables_atomic(backup_relation, existing_relation) %}
   {% else %}
     -- We have to use an intermediate and rename accordingly
-    {% call statement('main') -%}
-      {{ clickhouse__insert_by_parts(False, intermediate_relation, sql) }}
-    {%- endcall %}
+    {{ clickhouse__insert_by_parts(False, intermediate_relation, sql) }}
     {{ adapter.rename_relation(existing_relation, backup_relation) }}
     {{ adapter.rename_relation(intermediate_relation, target_relation) }}
   {% endif %}
@@ -186,13 +180,14 @@
     {% if adapter.is_before_version('22.7.1.2484') -%}
         {{ create_table }}
     {%- else %}
-        {% call statement('create_table_empty') %}
+        {% call statement('main') %}
             {{ create_table }}
         {% endcall %}
         {% for v in filter_list %}
             {% set sql_finel = sql.replace('__filter__', v) %}
             {% call statement('insert_part') %}
                 {{ clickhouse__insert_into(relation.include(database=False), sql_finel) }}
+            {{ log('insert part ' ~ v, info=True) }}
             {% endcall %}
         {% endfor %}
     {%- endif %}

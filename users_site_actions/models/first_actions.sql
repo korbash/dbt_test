@@ -12,6 +12,7 @@
 ) }}
     SELECT
         track_id,
+        any(user_id) AS user_id,
         groupArrayIf(100)(method, event == 'apply_promo' and success) AS promocodes,
         groupArrayIf(100)(method, event == 'apply_ref' and success) AS refs,
         groupArrayIf(100)(type, event == 'apply_utm' and success) AS utm_source,
@@ -37,7 +38,7 @@
         any(if(event == 'pet2game' and type == 'withdraw' and success, datetime, null)) as withdraw_pet
     FROM (
         SELECT track_id, user_id, event, datetime, type, method, merge_id, success
-        FROM users_actions
+        FROM {{ ref("users_actions") }}
         WHERE modulo(sipHash64(track_id),{{n}}) == '__filter__'
         ORDER BY datetime
     )

@@ -21,6 +21,11 @@ sources:
         - name: actions_row
           description: "all old data from s3"
           identifier: S3_users_actions_row
+
+        - name: actions_new
+          description: "new data from postgress"
+          identifier: client_events
+
     
     
     - name: src_back

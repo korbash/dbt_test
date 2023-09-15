@@ -1,6 +1,3 @@
-
-
-
 SELECT _airbyte_emitted_at AS load2ch,
     JSONExtract(_airbyte_data, '_id', 'String') AS user_id,
     JSONExtract(_airbyte_data, 'email', 'String') AS email,
