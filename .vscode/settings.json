@@ -20,5 +20,7 @@
         "./python-telegram"
     ],
     "editor.suggest.preview": true,
-    "dbt.sqlFmtPath": "/home/korbash/miniconda/envs/test-dbt/bin/sqlfmt"
+    "dbt.sqlFmtPath": "/home/korbash/miniconda/envs/test-dbt/bin/sqlfmt",
+    "dbt.queryLimit": 10,
+    "resmon.showbattery": false
 }
