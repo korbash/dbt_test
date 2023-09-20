@@ -33,3 +33,77 @@ models:
     columns:
       - name: id
         description: "The primary key for this table"
+
+  - name: session_start
+    description: "session start events from pre_users_actions"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+  
+  - name: auth
+    description: "auth events from pre_users_actions"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+
+  - name: trade
+    description: "trade events from pre_users_actions"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+      - name: pet
+        tests:
+          - not_null
+      - name: currency
+        tests:
+          - not_null
+      - name: merge_id 
+        tests:
+          - not_null
+      - name: user_id 
+        tests:
+          - not_null
+
+  - name: payment
+    description: "payment events from pre_users_actions"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+      - name: merge_id 
+        tests:
+          - not_null
+      - name: user_id 
+        tests:
+          - not_null
+  
+  - name: page_visit
+    description: "page_visit events from pre_users_actions"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+
+  - name: site
+    description: "site events from pre_users_actions"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null 
+
+  - name: chat
+    description: "chat events from pre_users_actions"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null 
