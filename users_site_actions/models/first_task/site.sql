@@ -4,6 +4,6 @@
     order_by=['datetime']
 ) }}
 
-select distinct on (id, datetime) * 
+select * 
 from {{ source('src_actions', 'src_actions') }}
 where (event == 'site')

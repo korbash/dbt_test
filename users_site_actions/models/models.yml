@@ -98,7 +98,7 @@ models:
       - name: id
         description: "The primary key for this table"
         tests:
-          - not_null 
+          - not_null
 
   - name: chat
     description: "chat events from pre_users_actions"
