@@ -1,4 +1,4 @@
-{%- set n = 50 -%}
+{%- set n = 100 -%}
 {%- set f_list = [] -%}
 {%- for i in range(n) -%}
     {%- set f_list = f_list.append('{}'.format(i)) -%}
@@ -13,6 +13,10 @@
     SELECT
         track_id,
         any(user_id) AS user_id,
+        any(country) AS country,
+        any(reg_country) AS reg_country,
+        any(device) AS device,
+        any(browser) AS browser,
         groupArrayIf(100)(method, event == 'apply_promo' and success) AS promocodes,
         groupArrayIf(100)(method, event == 'apply_ref' and success) AS refs,
         groupArrayIf(100)(type, event == 'apply_utm' and success) AS utm_source,
@@ -37,8 +41,8 @@
         any(if(event == 'pet2game' and type == 'withdraw', datetime, null)) as try_withdraw_pet,
         any(if(event == 'pet2game' and type == 'withdraw' and success, datetime, null)) as withdraw_pet
     FROM (
-        SELECT track_id, user_id, event, datetime, type, method, merge_id, success
-        FROM {{ ref("users_actions") }}
+        SELECT track_id, user_id, country, reg_country, device, browser, event, datetime, type, method, merge_id, success
+        FROM {{ ref("users_actions")}}
         WHERE modulo(sipHash64(track_id),{{n}}) == '__filter__'
         ORDER BY datetime
     )
