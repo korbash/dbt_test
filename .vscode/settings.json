@@ -21,6 +21,6 @@
     ],
     "editor.suggest.preview": true,
     "dbt.sqlFmtPath": "/home/korbash/miniconda/envs/test-dbt/bin/sqlfmt",
-    "dbt.queryLimit": 10,
+    "dbt.queryLimit": 50,
     "resmon.showbattery": false
 }
