@@ -11,7 +11,7 @@ sources:
 
         - name: src_actions
           description: "data loaded by python"
-          identifier: pre_users_actions7
+          identifier: pre_users_actions
         - name: s3actions0
           description: "old data from s3"
           identifier: s3connector_actions0
