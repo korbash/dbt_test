@@ -6,4 +6,4 @@
     unique_key='id'
 )}}
 
-SELECT * FROM {{ ref("add_time_end") }}
+SELECT * FROM {{ ref('geo_add_time_end') }}

@@ -108,7 +108,7 @@ models:
         tests:
           - not_null 
 
-  - name: add_time_end
+  - name: login_add_time_end
     description: "remove consist auth"
     columns:
       - name: id
