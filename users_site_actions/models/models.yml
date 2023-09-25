@@ -107,3 +107,13 @@ models:
         description: "The primary key for this table"
         tests:
           - not_null 
+
+  - name: add_time_end
+    description: "remove consist auth"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+          - unique
+  
