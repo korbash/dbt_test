@@ -107,3 +107,11 @@ models:
         description: "The primary key for this table"
         tests:
           - not_null 
+  
+  - name: status
+    description: "chat events from pre_users_actions"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null 

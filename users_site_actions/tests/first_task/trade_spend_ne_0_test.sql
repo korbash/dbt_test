@@ -1,3 +1,3 @@
 select spend 
 from {{ ref ('trade') }}
-where spend <= 0 
+where spend == 0 

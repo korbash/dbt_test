@@ -5,6 +5,12 @@ name: 'users_site_actions'
 version: '1.0.0'
 config-version: 2
 
+vars:
+  # Start_date for auth table's first increment
+  auth_start_date: '2022-09-01'
+  users_site_actions:
+    platforms: ['auth']
+
 # This setting configures which "profile" dbt uses for this project.
 profile: 'clickhouse_cloud_prod'
 

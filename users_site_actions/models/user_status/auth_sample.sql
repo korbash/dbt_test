@@ -9,5 +9,6 @@ from {{ source('src_actions', 'src_actions') }}
 where event == 'auth'
   AND success
   AND isNotNull(user_id)
-  AND toDate(time_sort) BETWEEN {% do get_max_date %} + toIntervalDay(1) AND {% do get_max_date %} + toIntervalMonth(1)
+  AND toDate(time_sort) BETWEEN {% do get_max_date %} + toIntervalDay(1)
+                            AND {% do get_max_date %} + toIntervalMonth(1)
 
