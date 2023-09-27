@@ -22,5 +22,20 @@
     "editor.suggest.preview": true,
     "dbt.sqlFmtPath": "/home/korbash/miniconda/envs/test-dbt/bin/sqlfmt",
     "dbt.queryLimit": 50,
-    "resmon.showbattery": false
+    "resmon.showbattery": false,
+    "sqltools.connections": [
+        {
+            "server": "drtngyagyj.eu-west-1.aws.clickhouse.cloud",
+            "port": 8443,
+            "useHTTPS": true,
+            "database": "default",
+            "username": "default",
+            "password": "V._5bMEzhiwKd",
+            "tls": {},
+            "previewLimit": 50,
+            "driver": "ClickHouse",
+            "name": "clickhouse_prod"
+        }
+    ],
+    "dbt.queryScale": 1
 }
