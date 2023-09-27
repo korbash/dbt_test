@@ -1,8 +1,9 @@
 {{ config(
     materialized='incremental',
+    incremental_strategy='legacy',
     engine='MergeTree()',
     order_by='time_end',
-    uniq_id='id'
+    unique_key='id'
 )}}
 
-SELECT * FROM {{ ref("add_time_end") }}
+SELECT * FROM {{ ref('geo_add_time_end') }}
