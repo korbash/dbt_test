@@ -125,3 +125,50 @@ models:
           - not_null
           - unique
   
+  - name: cash_filter
+    description: "sample for inserting to user_cash_status filtred by time "
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+          - unique
+      - name: user_id
+        tests:
+          - not_null
+
+  - name: cash_add_spend_sum
+    description: "doing balance, pyament, trade aggregations for cash_filter sample per id"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+          - unique
+      - name: user_id
+        tests:
+          - not_null
+  
+  - name: cash_add_time_end
+    description: "rounding aggregations and changing time_end (1970 -> 2050)"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+          - unique
+      - name: user_id
+        tests:
+          - not_null
+
+  - name: user_cash_status
+    description: "table with cash operations aggregation by user_id"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+          - unique
+      - name: user_id
+        tests:
+          - not_null
