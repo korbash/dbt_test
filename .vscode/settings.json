@@ -37,5 +37,6 @@
             "name": "clickhouse_prod"
         }
     ],
-    "dbt.queryScale": 1
+    "dbt.queryScale": 0.85,
+    "dbt.enableNewLineagePanel": true
 }
