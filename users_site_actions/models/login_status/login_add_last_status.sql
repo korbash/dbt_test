@@ -1,16 +1,13 @@
-{% if execute %}
-    {% if run_query('EXISTS TABLE track_login_status').columns[0].values()[0] %}
-SELECT id, track_id, user_id, event, type, method, datetime, time_start AS time_sort
-FROM track_login_status
-WHERE toDate(time_end) == '2050-01-01'
-    AND track_id IN (
-        SELECT track_id
-        FROM {{ ref('login_clean_dubles_ids') }}
+{%- set max_date = get_max_date('track_login_status') -%}
+SELECT id, track_id, Null AS user_id, 'init' AS event, 'pass' AS type, 'pass' AS method, time_start
+FROM ({{ get_uniq_track_sample('track_login_status', 30) }})
+{% if max_date != '2022-09-01'%}
+    WHERE track_id NOT IN (
+        SELECT track_id FROM ({{ get_actual_info('track_login_status', ref('login_get_sample')) }})
     )
-UNION ALL
-    {% endif %}
+    UNION ALL (
+    {{ get_actual_info('track_login_status', ref('login_get_sample')) }}
+    )
 {% endif %}
-
-SELECT *
-FROM {{ ref('login_clean_dubles_ids') }}
-
+UNION ALL
+SELECT * FROM {{ ref('login_get_sample') }}
