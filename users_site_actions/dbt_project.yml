@@ -43,3 +43,9 @@ models:
     # Config indicated by + and applies to all files under models/example/
     # example:
     #   +materialized: view
+
+    cash_status: 
+      +required_tests: {"unique.*|not_null": 2}
+      cash_filter:
+        +required_tests: 
+           "unique.*|not_null": 2

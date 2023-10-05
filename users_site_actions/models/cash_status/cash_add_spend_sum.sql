@@ -20,8 +20,8 @@ SELECT id, user_id
       ,sumIf(sum_spend_per_id, (currency == 'rub') and (type == 'withdraw') ) over w as withdraw_rub 
       ,sumIf(sum_spend_per_id, (currency == 'eur') and (type == 'withdraw') ) over w as withdraw_eur
       ,sumIf(sum_spend_per_id, (currency == 'usd') and (type == 'withdraw') ) over w as withdraw_usd
-
-      ,time_sort
+      
+      ,time_sort 
 FROM {{ ref('cash_filter') }}
 WINDOW w AS (PARTITION BY user_id ORDER BY time_sort ASC
              ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)
