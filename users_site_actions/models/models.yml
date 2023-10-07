@@ -160,6 +160,29 @@ models:
       - name: user_id
         tests:
           - not_null
+  
+  - name: cash_union_prev
+    description: "union of new data batch with previous rows where time_end == 2050"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+      - name: user_id
+        tests:
+          - not_null
+    
+  - name: cash_status_filnal_sample
+    description: "changing end_time column on united sample"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+          - unique
+      - name: user_id
+        tests:
+          - not_null
 
   - name: user_cash_status
     description: "table with cash operations aggregation by user_id"
@@ -170,5 +193,107 @@ models:
           - not_null
           - unique
       - name: user_id
+        tests:
+          - not_null
+  
+  - name: pet_filter
+    description: "sample for inserting to user_pet_status filtred by time"
+    columns:
+      - name: user_id
+        tests:
+          - not_null
+      - name: pet
+        tests:
+          - not_null
+      - name: pet_coef
+        test:
+          - not_null
+
+  - name: pet_make_id_uniq
+    description: "getting rid of copies in id column by summarising pet_maps with same id "
+    columns:
+      - name: id
+        tests:
+          - not_null
+          - unique
+        description: "The primary key for this table"
+      - name: user_id
+        tests:
+          - not_null
+      - name: pet_map
+        tests:
+          - not_null
+
+  - name: pet_sum_map
+    description: "getting rid of copies in id column by summarising pet_maps with same id "
+    columns:
+      - name: id
+        tests:
+          - not_null
+          - unique
+        description: "The primary key for this table"
+      - name: user_id
+        tests:
+          - not_null
+      - name: sum_pet_map
+        tests:
+          - not_null
+
+  - name: pet_add_time_end
+    description: "adding time_start, time_end (1970 -> 2050)"
+    columns:
+      - name: id
+        tests:
+          - not_null
+          - unique
+        description: "The primary key for this table"
+      - name: user_id
+        tests:
+          - not_null
+      - name: sum_pet_map
+        tests:
+          - not_null
+  
+  - name: pet_union_prev
+    description: "union of new data batch with previous rows where time_end == 2050"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+      - name: user_id
+        tests:
+          - not_null
+      - name: sum_pet_map
+        tests:
+          - not_null
+    
+  - name: pet_status_final_sample
+    description: "changing end_time column on united sample"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+          - unique
+      - name: user_id
+        tests:
+          - not_null
+      - name: sum_pet_map
+        tests:
+          - not_null
+
+  - name: user_cash_status
+    description: "table with pet operations sum by user_id in time"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+          - unique
+      - name: user_id
+        tests:
+          - not_null
+      - name: sum_pet_map
         tests:
           - not_null

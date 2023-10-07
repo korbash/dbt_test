@@ -3,5 +3,5 @@ for (( i=1; i <= 5; i++ ))
 do
 echo_text=$'\n\n\n\nIteration'
 echo "$echo_text" "$i"
-dbt build --select +user_cash_status
+dbt build --select +user_pet_status
 done
