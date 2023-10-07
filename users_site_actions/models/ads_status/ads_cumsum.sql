@@ -3,8 +3,7 @@
     engine='MergeTree()',
     order_by=['event', 'success', 'type', 'method', 'datetime']
 ) }}
-
-SELECT id, track_id, event, datetime, time_sort,
+SELECT id, track_id, event, time_start,
     groupArray(100)(promo0) OVER w AS promocodes,
     groupArray(100)(promo_time0) OVER w AS promo_times,
     groupArray(100)(ref0) OVER w AS refs,
@@ -14,5 +13,5 @@ SELECT id, track_id, event, datetime, time_sort,
     groupArray(100)(utm_campain0) OVER w AS utm_campain,
     groupArray(100)(utm_time0) OVER w AS utm_times
 
-FROM {{ref('ads_exstract_info')}}
-WINDOW w AS (PARTITION BY track_id ORDER BY datetime)
+FROM {{ref('ads_add_all_tracks')}}
+WINDOW w AS (PARTITION BY track_id ORDER BY time_start)

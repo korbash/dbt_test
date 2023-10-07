@@ -13,8 +13,7 @@
 {%- endmacro -%}
  
 
-{%- macro get_uniq_track_sample(tb_name, days) -%}
-    {%- set max_date = get_max_date(tb_name) -%}
+{%- macro get_uniq_track_sample(max_date, days) -%}
     SELECT DISTINCT ON (track_id) toString(generateUUIDv4()) AS id, track_id, toDateTime('1980-01-01') AS time_start
     FROM {{ source('src_actions', 'src_actions') }}
     WHERE toDate(time_sort)
