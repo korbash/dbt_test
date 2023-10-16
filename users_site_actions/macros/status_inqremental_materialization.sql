@@ -1,4 +1,4 @@
-{% materialization my_incremental, adapter='clickhouse' %}
+{% materialization status_incremental, adapter='clickhouse' %}
 
   {%- set existing_relation = load_cached_relation(this) -%}
   {%- set target_relation = this.incorporate(type='table') -%}
@@ -10,86 +10,29 @@
   {% if unique_key is iterable and (unique_key is not string and unique_key is not mapping) %}
      {% set unique_key = unique_key|join(', ') %}
   {% endif %}
-  {%- set inserts_only = config.get('inserts_only') -%}
-  {%- set grant_config = config.get('grants') -%}
+
   {%- set full_refresh_mode = (should_full_refresh() or existing_relation.is_view) -%}
-  {%- set on_schema_change = incremental_validate_on_schema_change(config.get('on_schema_change'), default='ignore') -%}
-
-  {%- set intermediate_relation = make_intermediate_relation(target_relation)-%}
-  {%- set backup_relation_type = 'table' if existing_relation is none else existing_relation.type -%}
-  {%- set backup_relation = make_backup_relation(target_relation, backup_relation_type) -%}
-  {%- set preexisting_intermediate_relation = load_cached_relation(intermediate_relation)-%}
-  {%- set preexisting_backup_relation = load_cached_relation(backup_relation) -%}
-
-  {{ drop_relation_if_exists(preexisting_intermediate_relation) }}
-  {{ drop_relation_if_exists(preexisting_backup_relation) }}
 
   {{ run_hooks(pre_hooks, inside_transaction=False) }}
   {{ run_hooks(pre_hooks, inside_transaction=True) }}
-  {% set to_drop = [] %}
-    {{ log('test loging', info=True)}}
-  {% if existing_relation is none %}
-    {{ log('case 1', info=True)}}
+
+
+  {% if existing_relation is none or full_refresh_mode %}
     -- No existing table, simply create a new one
     {% call statement('main') %}
         {{ get_create_table_as_sql(False, target_relation, sql) }}
     {% endcall %}
 
-  {% elif full_refresh_mode %}
-    {{ log('case 2', info=True)}}
-    -- Completely replacing the old table, so create a temporary table and then swap it
-    {% call statement('main') %}
-        {{ get_create_table_as_sql(False, intermediate_relation, sql) }}
-    {% endcall %}
-    {% set need_swap = true %}
-
-  {% elif inserts_only or unique_key is none -%}
-    {{ log('case 3 {},{}'.format(inserts_only, unique_key), info=True)}}
-    -- There are no updates/deletes or duplicate keys are allowed.  Simply add all of the new rows to the existing
-    -- table. It is the user's responsibility to avoid duplicates.  Note that "inserts_only" is a ClickHouse adapter
-    -- specific configurable that is used to avoid creating an expensive intermediate table.
-    {% call statement('main') %}
-        {{ clickhouse__insert_into(target_relation, sql) }}
-    {% endcall %}
-
   {% else %}
-    {{ log('case else', info=True)}}
-    {% set schema_changes = none %}
-    {% set incremental_strategy = adapter.calculate_incremental_strategy(config.get('incremental_strategy'))  %}
-    {% set incremental_predicates = config.get('predicates', none) or config.get('incremental_predicates', none) %}
-    {% if on_schema_change != 'ignore' %}
-      {%- set schema_changes = check_for_schema_changes(existing_relation, target_relation) -%}
-      {% if schema_changes['schema_changed'] and incremental_strategy in ('append', 'delete_insert') %}
-        {% set incremental_strategy = 'legacy' %}
-        {% do log('Schema changes detected, switching to legacy incremental strategy') %}
-      {% endif %}
-    {% endif %}
-    {% if incremental_strategy != 'delete_insert' and incremental_predicates %}
-      {% do exceptions.raise_compiler_error('Cannot apply incremental predicates with ' + incremental_strategy + ' strategy.') %}
-    {% endif %}
-    {% if incremental_strategy == 'legacy' %}
-      {{ log('incremental_strategy == legacy', info=True)}}
-      {% do clickhouse__incremental_legacy(existing_relation, intermediate_relation, schema_changes, unique_key) %}
-      {% set need_swap = true %}
-    {% elif incremental_strategy == 'delete_insert' %}
-      {% do clickhouse__incremental_delete_insert(existing_relation, unique_key, incremental_predicates) %}
-    {% elif incremental_strategy == 'append' %}
+      {% call statement('delete') %}
+        ALTER TABLE {{target_relation}} DROP PARTITION true
+      {% endcall %}
       {% call statement('main') %}
         {{ clickhouse__insert_into(target_relation, sql) }}
       {% endcall %}
-    {% endif %}
   {% endif %}
 
-  {% if need_swap %}
-      {% if existing_relation.can_exchange %}
-        {% do adapter.rename_relation(intermediate_relation, backup_relation) %}
-        {% do exchange_tables_atomic(backup_relation, target_relation) %}
-      {% else %}
-        {% do adapter.rename_relation(target_relation, backup_relation) %}
-        {% do adapter.rename_relation(intermediate_relation, target_relation) %}
-      {% endif %}
-      {% do to_drop.append(backup_relation) %}
-  {% endif %}
+  
 
   {% set should_revoke = should_revoke(existing_relation, full_refresh_mode) %}
   {% do apply_grants(target_relation, grant_config, should_revoke=should_revoke) %}
@@ -103,10 +46,6 @@
   {{ run_hooks(post_hooks, inside_transaction=True) }}
 
   {% do adapter.commit() %}
-
-  {% for rel in to_drop %}
-      {% do adapter.drop_relation(rel) %}
-  {% endfor %}
 
   {{ run_hooks(post_hooks, inside_transaction=False) }}
 
