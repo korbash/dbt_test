@@ -11,7 +11,7 @@ SELECT toString(generateUUIDv4()) AS id,
     Null as utm_campain0,
     NUll as utm_time0
 
-FROM {{ ref('tracks') }}
+FROM {{ ref('ads_uniq_tracks') }}
 
 UNION ALL
 

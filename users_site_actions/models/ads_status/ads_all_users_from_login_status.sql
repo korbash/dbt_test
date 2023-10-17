@@ -1,0 +1,1 @@
+SELECT DISTINCT track_id FROM {{ ref('ads_exstract_info') }}

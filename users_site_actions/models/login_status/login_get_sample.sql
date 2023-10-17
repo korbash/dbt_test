@@ -9,4 +9,4 @@ where
     and toDate(time_sort)
     between toDate('{{ max_date }}')
     + toIntervalDay(1) and toDate('{{ max_date }}')
-    + toIntervalDay(1 + 1)
+    + toIntervalDay(15 + 1)

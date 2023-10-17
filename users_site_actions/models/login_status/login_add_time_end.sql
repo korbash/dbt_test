@@ -1,3 +1,8 @@
+{{ config(
+    materialized='table',
+    engine='MergeTree()',
+    order_by=['time_end', 'time_start']
+)}}
 SELECT * EXCEPT time_end,
     if(time_end == '1970-01-01', date('2050-01-01'), time_end) AS time_end
 FROM (

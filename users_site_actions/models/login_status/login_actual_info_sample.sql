@@ -4,4 +4,4 @@
     order_by='time_start'
 )}}
 
-{{ get_actual_info('track_geo_status', ref('geo_get_sample')) }}
+{{ get_actual_info('track_login_status', ref('login_get_sample')) }}
