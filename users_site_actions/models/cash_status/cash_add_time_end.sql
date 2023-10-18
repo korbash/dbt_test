@@ -23,6 +23,7 @@ from (
           ,round(withdraw_rub,2) as withdraw_rub
           ,round(withdraw_eur,2) as withdraw_eur
           ,round(withdraw_usd,2) as withdraw_usd
+          
           ,time_sort as time_start
           ,any(time_sort) OVER w AS time_end
     from {{ ref('cash_add_spend_sum') }}
