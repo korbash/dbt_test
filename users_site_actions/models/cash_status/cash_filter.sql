@@ -3,7 +3,7 @@
 SELECT max(toDate(time_start)) AS last_date FROM user_cash_status
 {% endset %}
 {% if execute %}
-    {% if run_query('EXISTS TABLE user_cash_status').columns[0].values()[0] %}
+    {% if run_query('SELECT COUNT() FROM user_cash_status').columns[0].values()[0] > 0 %}
         {% set max_date = run_query(get_max_date).columns[0].values()[0] %}
     {% else %} {% set max_date = '2022-09-01' %}
     {% endif %}
@@ -11,10 +11,12 @@ SELECT max(toDate(time_start)) AS last_date FROM user_cash_status
 
 {# {% set max_date = '2022-09-01' %} #}
 
+
+
 select * EXCEPT id_rank
 from (
 
-    SELECT id, user_id, event, type, pet, currency, time_sort
+    SELECT id, track_id, user_id, event, type, pet, currency, time_sort,spend
           ,sum(spend) over (partition by id) as sum_spend_per_id
           ,row_number() over(partition by id order by time_sort) as id_rank
     FROM {{ source('src_actions', 'src_actions') }}
@@ -23,7 +25,6 @@ from (
                             toDate('{{max_date}}') + toIntervalMonth(1)
         )
     and (success == true)
-    and (spend <> 0)
 )
 
 where id_rank == 1

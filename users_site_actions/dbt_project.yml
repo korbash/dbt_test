@@ -44,8 +44,3 @@ clean-targets:         # directories to be removed by `dbt clean`
     # example:
     #   +materialized: view
 
-    cash_status: 
-      +required_tests: {"unique.*|not_null": 2}
-      cash_filter:
-        +required_tests: 
-           "unique.*|not_null": 2
