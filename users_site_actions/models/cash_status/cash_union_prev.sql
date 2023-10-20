@@ -1,3 +1,4 @@
+
 select *
 from {{ ref('cash_add_prev_status') }}
 

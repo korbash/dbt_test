@@ -259,6 +259,20 @@ models:
       - name: sum_pet_map
         tests:
           - not_null
+
+  - name: pet_add_prev_status
+    description: "adds statuses for each user before their first pet action"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+      - name: user_id
+        tests:
+          - not_null
+      - name: sum_pet_map
+        tests:
+          - not_null
   
   - name: pet_union_prev
     description: "union of new data batch with previous rows where time_end == 2050"
@@ -276,6 +290,21 @@ models:
     
   - name: pet_status_final_sample
     description: "changing end_time column on united sample"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        tests:
+          - not_null
+          - unique
+      - name: user_id
+        tests:
+          - not_null
+      - name: sum_pet_map
+        tests:
+          - not_null
+
+  - name: user_pet_status
+    description: "table with pet operations aggregation by user_id"
     columns:
       - name: id
         description: "The primary key for this table"

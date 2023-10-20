@@ -1,5 +1,5 @@
 {% set get_max_date %}
-SELECT max(toDate(time_start)) AS last_date FROM user_cash_status
+SELECT max(toDate(time_start)) AS last_date FROM user_pet_status
 {% endset %}
 {% if execute %}
     {% if run_query('SELECT COUNT() FROM user_pet_status').columns[0].values()[0] > 0 %}
@@ -10,7 +10,7 @@ SELECT max(toDate(time_start)) AS last_date FROM user_cash_status
 
 {# {% set max_date = '2022-09-01' %} #}
 
-select * EXCEPT id_rank
+select * 
 from (
 
     SELECT id, track_id, user_id, success, pet, time_sort
@@ -21,7 +21,7 @@ from (
     FROM {{ source('src_actions', 'src_actions') }}
     WHERE (event == 'pet2game')
     and (time_sort between toDate('{{max_date}}') + toIntervalDay(1) and
-                            toDate('{{max_date}}') + toIntervalMonth(1)
+                            toDate('{{max_date}}') + toIntervalWeek(2)
         )
     {# and (success == true) #}
     and isNotNull(pet)

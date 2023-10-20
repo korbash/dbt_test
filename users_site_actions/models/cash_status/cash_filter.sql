@@ -22,7 +22,7 @@ from (
     FROM {{ source('src_actions', 'src_actions') }}
     WHERE (event IN ['payment', 'trade', 'pet2game'])
     and (time_sort between toDate('{{max_date}}') + toIntervalDay(1) and
-                            toDate('{{max_date}}') + toIntervalMonth(1)
+                            toDate('{{max_date}}') + toIntervalWeek(2)
         )
     and (success == true)
 )
