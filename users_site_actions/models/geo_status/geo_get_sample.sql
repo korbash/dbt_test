@@ -9,5 +9,5 @@ FROM {{ source('src_actions', 'src_actions') }}
 WHERE event IN ['session_start', 'change', 'trade', 'payment']
     AND toDate(time_start) BETWEEN
     toDate('{{ max_date }}') + toIntervalDay(1)
-    AND toDate('{{ max_date }}') + toIntervalDay(5 + 1)
+    AND toDate('{{ max_date }}') + toIntervalDay(2 + 1)
 
