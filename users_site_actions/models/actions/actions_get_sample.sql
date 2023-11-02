@@ -10,6 +10,6 @@ SELECT
     promo_times, refs, ref_times, utm_source, utm_medium,
     utm_campain, utm_times, country, currency, lang)
 FROM {{ ref('distinct_actions') }}
-WHERE  time_sort BETWEEN
+WHERE  toDate(time_sort) BETWEEN
     toDate('{{ max_date }}') + toIntervalDay(1) 
     AND toDate('{{ max_date }}') + toIntervalDay(2 + 1)
