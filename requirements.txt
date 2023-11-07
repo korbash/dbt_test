@@ -1,4 +1,4 @@
-dbt-clickhouse
+dbt-clickhouse==1.4.9
 pandas
 
 
