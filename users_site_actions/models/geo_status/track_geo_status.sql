@@ -1,4 +1,5 @@
 {{ config(
+    tags=['status','ready'],
     materialized='status_incremental',
     engine='MergeTree()',
     order_by='time_end',

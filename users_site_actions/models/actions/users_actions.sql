@@ -1,4 +1,5 @@
 {{ config(
+    tags=['ready'],
     materialized='incremental',
     incremental_strategy='append',
     engine='MergeTree()',

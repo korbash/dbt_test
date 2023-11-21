@@ -1,60 +1,53 @@
 version: 2
-
 models:
   - name: apply_promo
-    description: "event promo apply"
+    description: event promo apply
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
           - unique
           - not_null
-
   - name: apply_ref
-    description: "event user comes with refcode"
+    description: event user comes with refcode
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
           - unique
           - not_null
-
   - name: apply_utm
-    description: "event user comes with utm"
+    description: event user comes with utm
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
           - unique
           - not_null
-        
   - name: distinct_actions
-    description: "all events without duplicates"
+    description: all events without duplicates
     columns:
       - name: id
-        description: "The primary key for this table"
-
+        description: The primary key for this table
   - name: session_start
-    description: "session start events from pre_users_actions"
+    description: session start events from pre_users_actions
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
           - not_null
-  
   - name: auth
-    description: "auth events from pre_users_actions"
+    description: auth events from pre_users_actions
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
           - not_null
-
   - name: trade
-    description: "trade events from pre_users_actions"
+    description: trade events from pre_users_actions
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
           - not_null
       - name: pet
@@ -63,112 +56,211 @@ models:
       - name: currency
         tests:
           - not_null
-      - name: merge_id 
+      - name: merge_id
         tests:
           - not_null
-      - name: user_id 
+      - name: user_id
         tests:
           - not_null
-
   - name: payment
-    description: "payment events from pre_users_actions"
+    description: payment events from pre_users_actions
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
           - not_null
-      - name: merge_id 
+      - name: merge_id
         tests:
           - not_null
-      - name: user_id 
+      - name: user_id
         tests:
           - not_null
-  
   - name: page_visit
-    description: "page_visit events from pre_users_actions"
+    description: page_visit events from pre_users_actions
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
           - not_null
-
   - name: site
-    description: "site events from pre_users_actions"
+    description: site events from pre_users_actions
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
           - not_null
-
   - name: chat
-    description: "chat events from pre_users_actions"
+    description: chat events from pre_users_actions
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
-          - not_null 
-  
+          - not_null
   - name: status
-    description: "chat events from pre_users_actions"
+    description: chat events from pre_users_actions
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
-          - not_null 
-
+          - not_null
   - name: login_add_time_end
-    description: "remove consist auth"
+    description: remove consist auth
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
           - not_null
           - unique
-  
   - name: cash_filter
     description: "sample for inserting to user_cash_status filtred by time "
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
           - not_null
           - unique
       - name: user_id
         tests:
           - not_null
-
   - name: cash_add_spend_sum
-    description: "doing balance, pyament, trade aggregations for cash_filter sample per id"
+    description: doing balance, pyament, trade aggregations for cash_filter sample per id
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
           - not_null
           - unique
       - name: user_id
         tests:
           - not_null
-  
   - name: cash_add_time_end
-    description: "rounding aggregations and changing time_end (1970 -> 2050)"
+    description: rounding aggregations and changing time_end (1970 -> 2050)
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
           - not_null
           - unique
       - name: user_id
         tests:
           - not_null
-
   - name: user_cash_status
-    description: "table with cash operations aggregation by user_id"
+    description: table with cash operations aggregation by user_id
     columns:
       - name: id
-        description: "The primary key for this table"
+        description: The primary key for this table
         tests:
           - not_null
           - unique
       - name: user_id
         tests:
           - not_null
+  - name: track_ads_status
+    description: historical status of all promocodes, refcodes, utms connected with track_id
+    columns:
+      - name: id
+        description: ""
+      - name: track_id
+        description: ""
+      - name: event
+        description: ""
+      - name: time_start
+        description: ""
+      - name: promocodes
+        description: ""
+      - name: promo_times
+        description: ""
+      - name: refs
+        description: ""
+      - name: ref_times
+        description: ""
+      - name: utm_source
+        description: ""
+      - name: utm_medium
+        description: ""
+      - name: utm_campain
+        description: ""
+      - name: utm_times
+        description: ""
+      - name: time_end
+        description: ""
+  - name: track_geo_status
+    description: historical status of country, currency, lang connected with track_id
+    columns:
+      - name: id
+        description: ""
+      - name: track_id
+        description: ""
+      - name: event
+        description: ""
+      - name: type
+        description: ""
+      - name: time_start
+        description: ""
+      - name: country
+        description: ""
+      - name: currency
+        description: ""
+      - name: lang
+        description: ""
+      - name: time_end
+        description: ""
+  - name: track_login_status
+    description: historical status of user_id connected with track_id
+    columns:
+      - name: id
+        description: ""
+      - name: track_id
+        description: ""
+      - name: user_id
+        description: ""
+      - name: event
+        description: ""
+      - name: type
+        description: ""
+      - name: method
+        description: ""
+      - name: time_start
+        description: ""
+      - name: time_end
+        description: ""
+  - name: tracks
+    description: all track_id with static info about
+    columns:
+      - name: track_id
+        description: ""
+      - name: browser
+        description: ""
+      - name: device
+        description: ""
+      - name: domain
+        description: ""
+  - name: user_ads_status
+    description: user ads cumsum by user_id
+    columns:
+      - name: id
+        description: ""
+      - name: user_id
+        description: ""
+      - name: event
+        description: ""
+      - name: time_start
+        description: ""
+      - name: promocodes
+        description: ""
+      - name: promo_times
+        description: ""
+      - name: refs
+        description: ""
+      - name: ref_times
+        description: ""
+      - name: utm_source
+        description: ""
+      - name: utm_medium
+        description: ""
+      - name: utm_campain
+        description: ""
+      - name: utm_times
+        description: ""
+      - name: time_end
+        description: ""

@@ -21,7 +21,7 @@
     ],
     "editor.suggest.preview": true,
     "dbt.sqlFmtPath": "/home/korbash/miniconda/envs/test-dbt/bin/sqlfmt",
-    "dbt.queryLimit": 50,
+    "dbt.queryLimit": 100,
     "resmon.showbattery": false,
     "sqltools.connections": [
         {
@@ -38,5 +38,6 @@
         }
     ],
     "dbt.queryScale": 0.85,
-    "dbt.enableNewLineagePanel": true
+    "dbt.enableNewLineagePanel": true,
+    "dbt.enableNewQueryPanel": true
 }
