@@ -2,7 +2,7 @@
     tags=['status','ready'],
     materialized='table',
     engine='MergeTree()',
-    order_by='time_end'
+    order_by=['time_end', 'time_start']
 )}}
 
 SELECT * EXCEPT (time_end),

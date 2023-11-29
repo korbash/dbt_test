@@ -1,7 +1,7 @@
 {{ config(
-    materialized='view',
+    materialized='table',
     engine='MergeTree()',
-    order_by=['event', 'success', 'type', 'method', 'datetime']
+    order_by=['user_id', 'time_start'],
 ) }}
 SELECT id, user_id, event, time_start,
     groupArray(100)(promo0) OVER w AS promocodes,
