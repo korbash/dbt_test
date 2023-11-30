@@ -1,12 +1,18 @@
 {{ config(
-    materialized='table',
-    engine='MergeTree()',
-    order_by=['time_sort'],
+    materialized = 'table',
+    engine = 'MergeTree()',
+    order_by = ['time_sort'],
 ) }}
-{%- set max_date = get_max_date2('time_sort', 'users_actions') -%}
--- Model 1: actions_get_sample_with_where
-select
-    * except (
+
+{%- set max_date = get_max_date2(
+    'time_sort',
+    'users_actions'
+) -%}
+
+SELECT
+    *
+EXCEPT
+    (
         user_id,
         device,
         browser,
@@ -23,10 +29,10 @@ select
         currency,
         lang
     )
-from {{ ref('distinct_actions') }}
-where
-    toDate(time_sort)
-    between todate('{{ max_date }}')
-    + tointervalday(1) and todate('{{ max_date }}')
-    + tointervalday(2 + 1)
-    
+FROM
+    {{ ref('distinct_actions') }}
+WHERE
+    toDate(time_sort) BETWEEN toDate('{{ max_date }}') + toIntervalDay(1)
+    AND toDate('{{ max_date }}') + toIntervalDay(
+        2 + 1
+    )

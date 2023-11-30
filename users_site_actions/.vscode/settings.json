@@ -1,4 +1,7 @@
 {
     "dbt.queryLimit": 50,
-    "dbt.queryScale": 0.54
+    "dbt.queryScale": 0.54,
+    "dbt-formatter.upper": true,
+    "dbt-formatter.camelCase": false,
+    "dbt-formatter.lowerWords": false,
 }
