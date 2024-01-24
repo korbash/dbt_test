@@ -26,6 +26,16 @@ sources:
           description: "new data from postgress"
           identifier: client_events
 
+    - name: ym
+      schema: default
+      # loader: S3
+      description: "data from yandex metrica"
+
+      tables:
+        - name: visits
+          description: "visits"
+          identifier: visits_all
+
     
     
     - name: src_back

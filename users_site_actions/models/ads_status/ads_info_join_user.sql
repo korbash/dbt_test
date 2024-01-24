@@ -1,3 +1,9 @@
+{{ config(
+    materialized='table',
+    engine='MergeTree()',
+    order_by=['user_id', 'time_start'],
+) }}
+
 SELECT * EXCEPT rank FROM (
     SELECT * EXCEPT (user_id, track_id, time_end),
         assumeNotNull(user_id) AS user_id,

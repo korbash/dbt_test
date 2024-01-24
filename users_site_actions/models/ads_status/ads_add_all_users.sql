@@ -1,3 +1,9 @@
+{{ config(
+    materialized='table',
+    engine='MergeTree()',
+    order_by=['user_id', 'time_start'],
+) }}
+
 SELECT toString(generateUUIDv4()) AS id,
     'init' as event,
     toDateTime('1980-01-01') AS time_start,
