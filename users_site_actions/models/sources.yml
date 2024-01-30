@@ -47,4 +47,8 @@ sources:
 
         - name: src_users
           description: "all users"
-          identifier: _airbyte_raw_users
+          identifier: users
+        
+        - name: withdraws_updates
+          description: "withdraws updates"
+          identifier: withdraws_updates
