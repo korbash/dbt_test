@@ -39,7 +39,7 @@ sources:
     
     
     - name: src_back
-      schema: default
+      schema: prod_copies
       # loader: S3
       description: ""
 
