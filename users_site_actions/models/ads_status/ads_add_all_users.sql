@@ -15,9 +15,9 @@ SELECT toString(generateUUIDv4()) AS id,
     Null as utm_medium0,
     Null as utm_campain0,
     NUll as utm_time0,
-    user_id,
+    user_id
 
-FROM ( SELECT DISTINCT user_id FROM {{ ref('ads_info_join_user') }} )
+FROM {{ ref('ads_distinct_users') }}
 
 UNION ALL
 
