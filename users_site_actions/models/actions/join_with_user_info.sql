@@ -11,8 +11,8 @@ SELECT
     reg_ref,
     reg_country,
     reg_currency,
-    reg_type,
+    NULL AS reg_type,
     reg_time,
-    request_time
+    NULL AS request_time
 FROM {{ ref('join_with_geo_status') }}
-LEFT JOIN {{ ref('extract_users') }} AS users USING(user_id)
+LEFT JOIN {{ source('src_back', 'src_users') }} AS users USING(user_id)
