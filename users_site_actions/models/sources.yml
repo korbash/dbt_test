@@ -26,6 +26,14 @@ sources:
           description: "new data from postgress"
           identifier: client_events
 
+    - name: clusters
+      schema: default
+      description: ""
+
+      tables:
+          - name: clients
+            identifier: clients
+
     - name: ym
       schema: default
       # loader: S3
